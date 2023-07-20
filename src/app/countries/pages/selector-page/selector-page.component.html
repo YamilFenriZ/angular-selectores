@@ -1,4 +1,23 @@
 
+<h1>Hola</h1>
+<form >
+  <mat-form-field>
+    <mat-label>
+      Paises
+    </mat-label>
+    <input type="text"
+            matInput
+            [formControl]="control"
+            [matAutocomplete]="auto"
+    >
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let pais of filtroPaises | async" [value]="pais">
+        {{pais}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+
 
 <h1 class="mt-3">Selectores anidados</h1>
 <hr>

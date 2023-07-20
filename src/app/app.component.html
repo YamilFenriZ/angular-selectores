@@ -1,2 +1,23 @@
+<h1>Hola</h1>
+<form >
+  <mat-form-field>
+    <mat-label>
+      Paises
+    </mat-label>
+    <input type="text"
+            matInput
+            [formControl]="control"
+            [matAutocomplete]="auto"
+    >
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let pais of filtroPaises | async" [value]="pais">
+        {{pais}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+
+<!-- Agrega el botón para redireccionar -->
+<button mat-raised-button color="primary" (click)="redireccionar()">Ir al PDF</button>
 
 <router-outlet></router-outlet>

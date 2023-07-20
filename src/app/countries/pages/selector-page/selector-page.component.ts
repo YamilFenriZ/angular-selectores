@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CountriesService } from '../../services/countries.service';
 import { Region, SmallCountry } from '../../interfaces/country.interfaces';
-import { filter, switchMap, tap } from 'rxjs';
+import { Observable, debounceTime, filter, map, startWith, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-selector-page',
@@ -21,6 +21,12 @@ export class SelectorPageComponent implements OnInit {
     border: ['', Validators.required ],
   })
 
+  paises: string[] = [
+    "Bolivia", "Noruega", "Georgia", "España", "Estados Unidos", "Dubai"
+  ]
+  control = new FormControl();
+  filtroPaises: Observable<string[]> = new Observable<string[]>();
+
   constructor(
     private fb: FormBuilder,
     private countriesService: CountriesService
@@ -29,6 +35,11 @@ export class SelectorPageComponent implements OnInit {
   ngOnInit(): void {
     this.onRegionChanged();
     this.onCountryChanged();
+    this.filtroPaises = this.control.valueChanges.pipe(
+      debounceTime(600),
+      startWith(''),
+      map( valor => this._filtro(valor))
+    );
   }
 
   get regions():Region[]{
@@ -64,6 +75,19 @@ export class SelectorPageComponent implements OnInit {
         this.borders = countries;
 
       });
+  }
+
+  private _filtro(valor: string): string[]{
+    const valorFormateado = valor.toLowerCase();
+    //return this.paises.filter(pais => pais.toLowerCase().indexOf(valorFormateado) === 0);
+    return this.paises.filter(pais => pais.toLowerCase().includes(valorFormateado));
+
+  }
+
+  redireccionar() {
+    // Redirigir a la URL del PDF
+    //window.location.href = 'https://dagrs.berkeley.edu/sites/default/files/2020-01/sample.pdf';
+    window.open('https://dagrs.berkeley.edu/sites/default/files/2020-01/sample.pdf', '_blank');
   }
 
 }

@@ -2,7 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SelectorPageComponent } from './pages/selector-page/selector-page.component';
 import { CountriesRoutingModule } from './countries-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { MatAutocompleteModule  } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+
 
 
 
@@ -13,7 +18,12 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     CountriesRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule
+
   ]
 })
 export class CountriesModule { }
